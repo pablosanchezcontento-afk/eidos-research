@@ -1,0 +1,21 @@
+{
+  "project": "EIDOS Research Program",
+  "version": "0.7",
+  "claim_boundary": "Engineering efficiency signal demonstrated in project records; general quality superiority unproven.",
+  "directly_preserved": {
+    "sappho_eager_ratio": 0.353,
+    "sappho_compiled_ratio": 0.482
+  },
+  "recorded_not_source_reproducible": {
+    "eidos_sparse16_parameters": 1093209171,
+    "sequence_length": 4096,
+    "eidos_tokens_per_second": 5229,
+    "transformer_tokens_per_second": 4049,
+    "throughput_ratio": 1.291,
+    "eidos_reserved_gib": 5.084,
+    "transformer_reserved_gib": 5.279,
+    "quality_0_5_tpp_eidos_bits_per_token": 11.5330,
+    "quality_0_5_tpp_transformer_bits_per_token": 11.5502,
+    "quality_2_0_tpp": "pending final fixed-set comparison"
+  }
+}
