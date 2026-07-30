@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "EIDOS Research Program"
+message: "If you discuss or reproduce this research archive, please cite it using this metadata."
+type: software
+authors:
+  - family-names: "Sánchez Contento"
+    given-names: "Pablo"
+version: "0.7"
+date-released: "2026-07-30"
+abstract: "An independent falsification-first research archive for sparse global attention, local causal mixing and predictive low-rank memory in autoregressive language models."
+repository-code: "https://github.com/pablosanchezcontento-afk/eidos-research"
+license: "LicenseRef-Proprietary-Pending"
+keywords:
+  - language models
+  - efficient attention
+  - state space memory
+  - GPU optimization
+  - architecture research
