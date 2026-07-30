@@ -32,36 +32,35 @@ Quality evidence became much narrower as training increased:
 
 ## Start here
 
-- [External project brief](docs/EIDOS_Project_Brief_v0.7.pdf) — concise company and collaborator presentation.
-- [Technical preprint](docs/EIDOS_Technical_Preprint_v0.7.pdf) — architecture, methodology, evidence, limitations and roadmap.
-- [Research deck](docs/EIDOS_Research_Deck_v0.7.pptx)
+- [Simplified public paper](papers/SIMPLIFIED_PAPER.md)
+- [Technical preprint](papers/TECHNICAL_PREPRINT.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Experimental status](docs/EXPERIMENTAL_STATUS.md)
 - [Negative results](docs/NEGATIVE_RESULTS.md)
 - [Reproducibility and source status](docs/REPRODUCIBILITY.md)
+- [Company and research-team positioning](docs/COMPANY_PROJECT_POSITIONING.md)
 - [Roadmap](docs/ROADMAP.md)
-- [Complete preserved release archive](releases/EIDOS-Research-Public-v0.7.zip)
+- [Source-complete EIDOS v0.4 archive](source_archives/README.md)
+- [Spanish overview](README_ES.md)
 
 ## Repository map
 
 ```text
 .
-├── docs/                       public-facing papers and technical documentation
-├── source/eidos-v0.4/          latest source-complete EIDOS snapshot
-├── history/                    documented research lineage and preserved archive
-├── results/                    preserved benchmark evidence and summaries
-├── releases/                   complete v0.7 archive with all preserved artifacts
-├── archive/                    historical audit material
-└── governance/                 contribution, security and release policies
+├── papers/                     simplified paper and technical preprint
+├── docs/                       architecture, evidence, limitations and roadmap
+├── source_archives/            reconstructable source-complete EIDOS v0.4 snapshot
+├── results/                    preserved raw benchmarks and evidence summaries
+└── governance/                 contribution and security policies
 ```
 
 ## What this repository does not claim
 
-This repository does **not** claim that EIDOS replaces Transformers, establishes state-of-the-art language modeling, or has been independently replicated. It publishes the full preserved research path, including failed designs, benchmark defects, invalid comparisons and unresolved questions.
+This repository does **not** claim that EIDOS replaces Transformers, establishes state-of-the-art language modeling, or has been independently replicated. It publishes the preserved research path, including failed designs, benchmark defects, invalid comparisons and unresolved questions.
 
 ## Source-completeness warning
 
-The exact executable source for the later **Sparse16 + token-shift + FlexAttention** branch described in the v0.7 papers is not present in the supplied archives. The latest source-complete snapshot is published under `source/eidos-v0.4/`. See [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
+The exact executable source for the later **Sparse16 + token-shift + FlexAttention** branch described in the papers is not present in the supplied archives. The latest source-complete snapshot can be reconstructed from `source_archives/`. See [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
 
 ## License status
 
