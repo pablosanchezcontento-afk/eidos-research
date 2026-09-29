@@ -4,6 +4,27 @@
 
 The preserved local release contains historical snapshots for NOVA v0.1, ISADORA v0.2, SAPPHO v0.3 and EIDOS v0.4, including source, tests, configurations and available artifacts.
 
+## EIDOS v0.4 in this repository
+
+The EIDOS v0.4 source (`eidos/`, `train.py`, `benchmarks/`, `experiments/`, `tests/`, `configs/`, `reports/`) is
+checked in as plain files, extracted from the preserved archive in `source_archives/`
+(SHA-256 `784872f1…7fc9`, verified by `python scripts/verify_source_archive.py` and by the test suite).
+Changes since the archive are limited to maintenance and are visible in Git history: a guard for `--steps 0`
+in `train.py`, an explicit cache-count check in `EidosLM.forward_step`, the promotion gate refactored into a
+testable `build_gate()` function, lint fixes and new tests. The archive itself is unchanged.
+
+Reproduce on any machine (CPU is enough for the tests):
+
+```bash
+python -m venv .venv && . .venv/bin/activate
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[dev]"
+pytest                     # scan equivalence, model shapes, parameter matching, a real CPU training run, gate logic
+ruff check .
+```
+
+GPU benchmarks: `scripts/benchmark_eidos_5070.ps1` (Windows, RTX 5070) or `python benchmarks/benchmark_gpu.py --help`.
+
 ## Current source gap
 
 The strongest later results refer to a post-v0.4 branch containing features described in the execution record:

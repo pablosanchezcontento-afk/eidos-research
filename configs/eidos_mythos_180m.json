@@ -1,0 +1,19 @@
+{
+  "vocab_size": 32768,
+  "dim": 768,
+  "n_layers": 20,
+  "n_heads": 12,
+  "n_kv_heads": 4,
+  "ffn_hidden": 2560,
+  "max_seq_len": 4096,
+  "conv_kernel": 7,
+  "memory_rank": 96,
+  "memory_bands": 3,
+  "memory_chunk": 64,
+  "rope_base": 10000.0,
+  "dropout": 0.0,
+  "tie_embeddings": true,
+  "gradient_checkpointing": true,
+  "mtp_weight": 0.05,
+  "macrocycle": "CMCA"
+}

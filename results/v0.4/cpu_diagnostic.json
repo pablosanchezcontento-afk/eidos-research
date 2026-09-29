@@ -1,0 +1,104 @@
+{
+  "device": "CPU diagnostic sandbox",
+  "threads": 8,
+  "seq_len": 512,
+  "results": [
+    {
+      "name": "eidos_core",
+      "parameters": 11049963,
+      "ffn_hidden": 640,
+      "memory_rank": 32,
+      "median_step_seconds": 0.29190066999944975,
+      "tokens_per_second": 1754.0213251342147,
+      "all_step_seconds": [
+        0.40084165100051905,
+        0.3310866400006489,
+        0.2814799840016349,
+        0.3615002299993648,
+        0.29190066999944975
+      ],
+      "ratio_vs_transformer": 1.2903787990631055
+    },
+    {
+      "name": "eidos_wide_memory",
+      "parameters": 11058379,
+      "ffn_hidden": 632,
+      "memory_rank": 64,
+      "median_step_seconds": 0.35765073399852554,
+      "tokens_per_second": 1431.5642366390637,
+      "all_step_seconds": [
+        0.28364187000079255,
+        0.33384422400013136,
+        0.3251637760004087,
+        0.35765073399852554,
+        0.3729081080000469
+      ],
+      "ratio_vs_transformer": 1.0531571731687224
+    },
+    {
+      "name": "eidos_dual_anchor",
+      "parameters": 11048171,
+      "ffn_hidden": 640,
+      "memory_rank": 32,
+      "median_step_seconds": 0.32003384699964954,
+      "tokens_per_second": 1599.8307829001621,
+      "all_step_seconds": [
+        0.32089958699907584,
+        0.3496788159991411,
+        0.33793149900157005,
+        0.30183032499917317,
+        0.32003384699964954
+      ],
+      "ratio_vs_transformer": 1.176945624754554
+    },
+    {
+      "name": "eidos_pulse",
+      "parameters": 11049430,
+      "ffn_hidden": 672,
+      "memory_rank": 32,
+      "median_step_seconds": 0.3602265219997207,
+      "tokens_per_second": 1421.3278832378614,
+      "all_step_seconds": [
+        0.33177952200094296,
+        0.33049825899979624,
+        0.3149534619988117,
+        0.3602265219997207,
+        0.4638698140006454
+      ],
+      "ratio_vs_transformer": 1.045626607137766
+    },
+    {
+      "name": "transformer_full",
+      "parameters": 11045120,
+      "ffn_hidden": 608,
+      "memory_rank": 32,
+      "median_step_seconds": 0.3766624359996058,
+      "tokens_per_second": 1359.307302946811,
+      "all_step_seconds": [
+        0.3811684249994869,
+        0.3965103379996435,
+        0.3766624359996058,
+        0.34430027800044627,
+        0.44178542000008747
+      ],
+      "ratio_vs_transformer": 1.0
+    },
+    {
+      "name": "conv_striped",
+      "parameters": 11050496,
+      "ffn_hidden": 608,
+      "memory_rank": 32,
+      "median_step_seconds": 0.2951158000014402,
+      "tokens_per_second": 1734.9121937812254,
+      "all_step_seconds": [
+        0.36537954000050377,
+        0.276159111999732,
+        0.2951158000014402,
+        0.33480368399978033,
+        0.28842875700138393
+      ],
+      "ratio_vs_transformer": 1.2763208069434697
+    }
+  ],
+  "warning": "CPU results are implementation diagnostics, not RTX 5070 evidence."
+}

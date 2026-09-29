@@ -1,0 +1,49 @@
+# Registro completo de la conversacion y del trabajo
+
+- Se recibio NOVA-Lattice v0.1 con codigo, informe y resultados crudos. El objetivo era entrenar desde cero en una RTX 5070 de 12 GB y comprobar si ABIM aportaba una ventaja real.
+- Se mantuvo como prioridad corregir el scan, repetir el baseline con la misma rejilla de learning rate, igualar ablations, probar BPE y no escalar antes de disponer de evidencia.
+- La auditoria de v0.1 encontro que NOVA habia recibido mas learning rates que conv_striped; la variacion por LR era mayor que la ventaja arquitectonica reportada.
+- Se confirmo que la ablation ganadora tenia aproximadamente un 3% mas de parametros y una sola semilla.
+- Se reprodujo el fallo silencioso del scan original: chunks grandes corrompian el estado por clamp y division sobre productos acumulados diminutos.
+- Se sustituyo por composicion afin estable y se añadieron tests de causalidad, backward, cache y chunks grandes.
+- La version ISADORA v0.2 documento una derrota frente a Transformer en una confirmacion corta y no declaro victoria.
+- Una auditoria externa posterior detecto que los proxies BPE de v0.2 apenas habian aprendido: vocabulario 1024, baseline uniforme de 10 bits/token y resultados de 16 a 27 bits/token en varias matrices.
+- Se confirmo que 19 de 19 selecciones de learning rate caian en el valor superior de la rejilla.
+- Se confirmo que solo se habian usado entre 1.920 y 6.400 tokens por corrida, alrededor del 1-3% del corpus proxy y muy por debajo de un regimen interpretable.
+- Se corrigio la lectura de la ablation no_surprise: no hubo trato desigual de LR, pero toda su evidencia estaba dentro de matrices sin aprendizaje util.
+- Se comprobo que dos matrices incumplian la tolerancia de parametros declarada: aproximadamente 0,347% y 0,523% de spread.
+- Se creo SAPPHO v0.3 con atencion como backbone y memoria como sidecar residual, ademas de barreras para uniforme, LR en borde, pocos tokens y matching de parametros.
+- El usuario ejecuto SAPPHO v0.3 en una RTX 5070 real con PyTorch 2.13.0+cu130 y BF16.
+- Resultado eager: SAPPHO 4.131,27 tok/s y Transformer 11.713,92 tok/s; ratio 0,3527.
+- Resultado compilado: SAPPHO 12.140,85 tok/s y Transformer 25.171,13 tok/s; ratio 0,4823.
+- La compilacion mejoro SAPPHO aproximadamente 2,94 veces, pero Transformer siguio siendo 2,07 veces mas rapido.
+- El matching de parametros del benchmark real fue 0,0496%, por debajo del limite de 0,5%.
+- La VRAM compilada fue 0,2376 GiB para SAPPHO y 0,2202 GiB para Transformer.
+- Se concluyo que la topologia sidecar duplicaba computo: atencion y memoria completa dentro de los mismos bloques.
+- Se abandono el nombre SAPPHO y cualquier nombre basado en personas.
+- Se eligio EIDOS, asociado a forma o esencia y expandido como Efficient Innovation-Driven Ordered State.
+- Se definio la familia Glyph, Verse, Epic y Mythos como niveles de evidencia y escala, no como etiquetas comerciales vacias.
+- Se creo una arquitectura nueva con macrociclo C-M-C-A: dos mixers convolucionales causales, una memoria predictiva y una ancla de atencion global cada cuatro capas.
+- La memoria Pulse se redujo de ancho completo a rango d/8 en los perfiles principales.
+- Los decays dinamicos por token/canal se sustituyeron por tres escalas aprendibles y ordenadas, compartidas entre canales de rango.
+- Se implemento un scan rapido por chunks mediante cumsum renormalizado, sin clamp y con chunk maximo estatico de 128 para evitar graph breaks de torch.compile.
+- Se mantuvo un oraculo secuencial float32 para comprobar el scan rapido.
+- Se implementaron variantes EIDOS Core, Wide Memory, Dual Anchor y Pulse.
+- Se implementaron baselines Transformer completo, Conv Striped y Recurrent Striped.
+- Se sustituyo el barrido lento de anchura FFN por matching analitico con comprobacion de candidatos cercanos alineados a 8.
+- En Glyph, todos los gaps de parametros quedan por debajo de 0,08%; Transformer queda a 0,044% del objetivo.
+- Se añadieron 16 tests: scan en seis chunks, backward, rechazo de chunk inseguro, causalidad, cache, gradientes, inicializacion de compuerta, matching, composicion de capas, referencias uniformes y forwards de baselines.
+- Los 16 tests pasan en el entorno de trabajo.
+- Se ejecuto un smoke training desde pesos aleatorios y se genero un checkpoint final; el override de subentrenamiento quedo marcado explicitamente.
+- Se creo train.py con test sellado, calculo de bits/token, baseline uniforme, matching estricto, minimo de 20 tokens/parametro y salida de resumen JSON.
+- Se creo benchmark_gpu.py con lotes fijos para reducir ruido, cuatro variantes EIDOS, tres baselines, VRAM, throughput y una puerta minima de 1,05x frente a Transformer.
+- El random loss del benchmark se renombro como no interpretable para impedir que vuelva a presentarse como calidad.
+- Se creo build_matrix.py para generar matrices reproducibles y separar calibracion de LR de confirmacion arquitectonica.
+- Se creo select_lrs.py; cualquier arquitectura cuyo mejor LR toque un borde queda bloqueada y recibe una rejilla sugerida ampliada.
+- Se creo evaluate_gate.py; Mythos solo se desbloquea si una misma variante vence al mejor baseline en test sellado y supera el throughput de Transformer.
+- Se mejoro pack_corpus.py con deduplicacion exacta antes del split y train/validation/test deterministas por hash de documento.
+- Se conservaron fetch_corpus.py y train_tokenizer.py para crear un BPE de 32.768 piezas desde cero.
+- Se creo benchmark_eidos_5070.ps1 para instalar, ejecutar tests y medir eager/compile en la GPU real.
+- Se creo un diagnostico CPU reproducible de secuencia 512. EIDOS Core marco 1,290x el throughput del Transformer y Conv Striped 1,276x. El informe lo etiqueta como diagnostico, no como evidencia CUDA.
+- Se generaron dos informes PDF: uno tecnico con metodologia, matematicas, resultados y registro; otro explicado para publico no tecnico.
+- No se ha declarado que EIDOS sea mejor que Transformer. La siguiente evidencia obligatoria es el JSON de benchmark EIDOS en la RTX 5070.
