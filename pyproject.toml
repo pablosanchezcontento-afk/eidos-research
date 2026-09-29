@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eidos-lattice"
+version = "0.4.0"
+description = "EIDOS: Efficient Innovation-Driven Orthogonal State language model research stack"
+requires-python = ">=3.11"
+dependencies = ["torch>=2.5", "numpy>=1.26"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["eidos*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+data = ["tokenizers>=0.19"]
+reports = ["reportlab>=4", "matplotlib>=3.8"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["source_archives", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Report prose (long Spanish paragraphs) is data, not code.
+"reports/build_reports.py" = ["E501"]

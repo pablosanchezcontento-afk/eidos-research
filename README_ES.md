@@ -95,6 +95,20 @@ Este repositorio **no** afirma que EIDOS:
 5. Probar en Linux, otras GPUs y otros tamaños de modelo.
 6. Publicar una licencia abierta cuando se decida el marco adecuado.
 
+## Ejecutar el código
+
+El código de EIDOS v0.4 está en el repositorio como fuente normal (antes solo existía dentro del archivo en
+Base64 de `source_archives/`, que se conserva intacto y se verifica por SHA-256).
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu   # o una build CUDA
+pip install -e ".[dev]"
+pytest -o addopts="" -q     # 41 tests en CPU, incluido un entrenamiento real de extremo a extremo
+python train.py --help
+```
+
+La CI ejecuta lint, la comprobación del archivo y todos los tests en cada push.
+
 ## Documentación
 
 - [Paper simplificado en español](papers/PAPER_SIMPLIFICADO_ES.md)

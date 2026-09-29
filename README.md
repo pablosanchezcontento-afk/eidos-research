@@ -30,6 +30,21 @@ Quality evidence became much narrower as training increased:
 - 0.5 tokens/parameter, three paired seeds: EIDOS led by only 0.0172 bits/token.
 - 2.0 tokens/parameter extension: final fixed-set comparison was not completed in the preserved record; a Transformer checkpoint produced a stronger momentary validation point.
 
+## Run the code
+
+The EIDOS v0.4 implementation is in this repository as plain source (see
+[REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for its provenance and the source gap after v0.4).
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu   # or a CUDA build
+pip install -e ".[dev]"
+pytest -o addopts="" -q     # 41 tests, CPU only, includes a real end-to-end training run
+python train.py --help      # controlled, parameter-matched pretraining with a sealed test split
+python experiments/evaluate_gate.py --help   # the promotion gate that decides any claim
+```
+
+CI runs lint, the archive checksum and the full test suite on every push.
+
 ## Start here
 
 - [Simplified public paper](papers/SIMPLIFIED_PAPER.md)
@@ -49,7 +64,12 @@ Quality evidence became much narrower as training increased:
 .
 ├── papers/                     simplified paper and technical preprint
 ├── docs/                       architecture, evidence, limitations and roadmap
-├── source_archives/            reconstructable source-complete EIDOS v0.4 snapshot
+├── eidos/                      EIDOS v0.4 model, Pulse memory scan and baselines
+├── train.py                    parameter-matched training with sealed test evaluation
+├── benchmarks/ experiments/    GPU/CPU benchmarks, LR selection, promotion gate
+├── tests/                      CPU test suite (scan equivalence, pipeline, gate, evidence integrity)
+├── configs/                    Glyph / Verse / Epic / Mythos / smoke profiles
+├── source_archives/            original source-complete EIDOS v0.4 snapshot (checksum-verified)
 ├── results/                    preserved raw benchmarks and evidence summaries
 └── governance/                 contribution and security policies
 ```
