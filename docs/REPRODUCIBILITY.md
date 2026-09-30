@@ -16,12 +16,18 @@ testable `build_gate()` function, lint fixes and new tests. The archive itself i
 Reproduce on any machine (CPU is enough for the tests):
 
 ```bash
-python -m venv .venv && . .venv/bin/activate
-pip install torch --index-url https://download.pytorch.org/whl/cpu
-pip install -e ".[dev]"
+python -m venv .venv && . .venv/bin/activate      # Python 3.11
+pip install --require-hashes -r requirements-cpu.lock \
+  --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+pip install --no-deps -e .
 pytest                     # scan equivalence, model shapes, parameter matching, a real CPU training run, gate logic
 ruff check .
 ```
+
+`requirements-cpu.lock` freezes the exact CPU test environment (Linux x86-64, Python 3.11, every
+package pinned with its hash, including `torch==2.14.0+cpu`). It is the environment CI runs, and a CI
+job fails if `pyproject.toml` and the lock drift apart. It covers the v0.4 tests, not the GPU
+benchmarks: those still need the CUDA stack and driver versions listed in step 7 below.
 
 GPU benchmarks: `scripts/benchmark_eidos_5070.ps1` (Windows, RTX 5070) or `python benchmarks/benchmark_gpu.py --help`.
 
