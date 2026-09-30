@@ -23,3 +23,29 @@ jobs:
       - run: ruff check .
       - run: python scripts/verify_source_archive.py
       - run: pytest -o addopts="" -q
+
+  lock:
+    # requirements-cpu.lock congela el entorno exacto (CPU, Python 3.11, con hashes). uv conserva
+    # los pins del archivo al recompilar, así que este job solo falla si pyproject.toml y el lock
+    # dejan de coincidir; entonces imprime el lock regenerado entre marcadores.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Recompilar el lock sin actualizar versiones
+        run: |
+          python -m pip install uv
+          touch requirements-cpu.lock
+          cp requirements-cpu.lock /tmp/committed.lock
+          uv pip compile pyproject.toml --extra dev --python-version 3.11 \
+            --python-platform x86_64-manylinux_2_28 \
+            --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple \
+            --index-strategy unsafe-best-match --generate-hashes --no-header -o requirements-cpu.lock
+      - name: Comparar con el lock del repositorio
+        run: |
+          if ! diff -q /tmp/committed.lock requirements-cpu.lock; then
+            echo "---BEGIN LOCK---"; cat requirements-cpu.lock; echo "---END LOCK---"
+            exit 1
+          fi
