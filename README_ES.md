@@ -111,6 +111,7 @@ La CI ejecuta lint, la comprobación del archivo y todos los tests en cada push.
 
 ## Documentación
 
+- [Catálogo completo de las versiones estudiadas (PDF)](papers/EIDOS_Versiones_Estudiadas_ES.pdf)
 - [Paper simplificado en español](papers/PAPER_SIMPLIFICADO_ES.md)
 - [Preprint técnico en español](papers/PREPRINT_TECNICO_ES.md)
 - [Arquitectura](docs/ARCHITECTURE.md)
